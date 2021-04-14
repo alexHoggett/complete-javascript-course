@@ -47,10 +47,6 @@ const restaurant = {
   },
 };
 
-// // //// //// //// //// //// //
-// // // Coding Challenge 2
-// // //// //// //// //// //// //
-
 const game = {
   team1: 'Bayern Munich', 
   team2: 'Borrussia Dortmund', 
@@ -92,10 +88,116 @@ const game = {
 };
 
 // // //// //// //// //// //// //
-// // // Which data structure to use
+// // // Working with Strings 2
 // // //// //// //// //// //// //
 
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
 
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// capitalisation in passenger name
+const passenger = 'aLeX'; // Alex
+const passengerLower = passenger.toLocaleLowerCase();
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// Comparing Emails
+const email = 'hello@alex.com'
+const loginEmail = '  Hello@alex.Com \n';
+
+
+// // //// //// //// //// //// //
+// // // Working with Strings 1
+// // //// //// //// //// //// //
+
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
+
+// console.log(plane[0]);
+// console.log(plane[1]);
+// console.log(plane[2]);
+// console.log('B737'[0]);
+// console.log(airline.length);
+
+// console.log(airline.indexOf('r'));
+// console.log(airline.lastIndexOf('r'));
+// console.log(airline.indexOf('Portugal'));
+
+// // can extract part of a string using the slice method, needs indexes as args
+
+// // arg is from where it will extract
+// console.log(airline.slice(4));
+// // providing 2 args will set the beginning and end
+// console.log(airline.slice(4, 7));
+
+// // extract the first word
+// console.log(airline.slice(0, airline.indexOf(' ')));
+// // extract the last word
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+// // using negative will start from the end
+// console.log(airline.slice(-2));
+// console.log(airline.slice(1, -1));
+
+// const checkMiddleSeat = function(seat){
+//   // B & E are middle seats
+//   const s = seat.slice(-1);
+//   console.log(s == 'B' || s == 'E' ? 'Middle Seat!' : 'Not middle seat :(');
+// }
+// checkMiddleSeat('11E');
+
+// // when a method is called on a string JS will automatically convert that primitive to a string object with the same content. it is on that object that methods are called. It is then returned to being a string primitive.
+
+// // //// //// //// //// //// //
+// // // Coding challenge 3
+// // //// //// //// //// //// //
+
+// const gameEvents = new Map([ 
+//   [17, '⚽ GOAL'],
+//   [36, '🔁 Substitution'],
+//   [47, '⚽ GOAL'],
+//   [61, '🔁 Substitution'], 
+//   [64, '🔶 Yellow card'], 
+//   [69, '🔴 Red card'],
+//   [70, '🔁 Substitution'], 
+//   [72, '🔁 Substitution'],
+//   [76, '⚽ GOAL'], 
+//   [80, '⚽ GOAL'],
+//   [92, '🔶 Yellow card'], 
+// ]);
+
+// // 1)
+// const eventSet = new Set();
+// for (const [minute, event] of gameEvents){
+//   eventSet.add(event);
+// }
+// const events = [...eventSet];
+
+// console.log(`These are the different events: ${events}`);
+
+// // different way
+
+// const events2 = [...new Set(gameEvents.values())];
+// console.log(events2);
+// console.log('NEXT');
+
+// // 2) 
+// gameEvents.delete(64);
+// console.log(gameEvents);
+// console.log('NEXT');
+
+// // 3) 
+// const time = [...gameEvents.keys()].pop();
+// console.log(time);
+// console.log(`An event happened, on average, every ${time / gameEvents.size} minutes`);
+
+// // 4)
+// for (const [time, event] of gameEvents){
+//   const half = time < 45 ? 'FIRST' : 'SECOND'
+//   console.log(`[${half} HALF] ${time}:   ${event}`);
+// }
 
 // // //// //// //// //// //// //
 // // // Maps: Iteration
