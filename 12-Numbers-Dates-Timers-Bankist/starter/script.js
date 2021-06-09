@@ -164,7 +164,7 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -182,7 +182,7 @@ btnLogin.addEventListener('click', function (e) {
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
@@ -206,14 +206,16 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function(){
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
@@ -223,7 +225,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -251,3 +253,68 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// /// // ///// /// // ///// /// // ///// /// // ///
+// /// // Timers: setTimeout & setInterval
+// /// // ///// /// // ///// /// // ///// /// // ///
+
+// set timeOut runs once
+// setInterval runs forever, until we stop it
+// second param is time in ms
+// params after time can be used as params in the callback function
+const ingredients = ['olives', 'spinach'];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`here is your pizza with ${ing1} and ${ing2}`),
+   3000, 
+   ...ingredients
+);
+console.log('Waiting...');
+
+// we can cancel the timeout
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+// setTimeout
+setInterval(function() {
+  const now = new Date();
+  console.log(now);
+}, 1000);
+
+// /// // ///// /// // ///// /// // ///// /// // ///
+// /// // Converting and Checking Numbers
+// /// // ///// /// // ///// /// // ///// /// // ///
+
+// console.log(23 === 23.0);
+
+// console.log(0.1 + 0.2);
+// console.log(0.1 + 0.2 === 0.3);
+
+// console.log(Number('23'));
+// // we can conver a string to a number using the + operator
+// console.log(+'23');
+
+// // Parsing
+// // second arg is the base of the number system used
+// console.log(Number.parseInt('30px', 10));
+// console.log(Number.parseInt('e23', 10));
+
+// // very good for reading values from CSS
+// console.log(Number.parseInt('2.5rem'));
+// console.log(Number.parseFloat('  2.5rem'));
+// console.log(Number.parseFloat('  2.5rem'));
+
+// // check if value is NaN
+// console.log(Number.isNaN(20));
+// console.log(Number.isNaN('20'));
+// console.log(Number.isNaN(+'20px'));
+// console.log(Number.isNaN(20 / 0));
+
+// // check if value is a number
+// // isFinite is the best for checking if it is explicitly a number
+// console.log(Number.isFinite(20));
+// console.log(Number.isFinite('20'));
+// console.log(Number.isFinite(+'20X'));
+// console.log(Number.isFinite(23/0));
+
+// console.log(Number.isInteger(23));
+// console.log(Number.isInteger(23.0));
+// console.log(Number.isInteger(23 / 0));

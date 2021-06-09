@@ -63,11 +63,14 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 
 // INSERTING HTML using insertAdjacentHTML
-const displayMovements = function(movements){
+const displayMovements = function(movements, sort = false){
   // empty current container
   // innerhtml similar to text content
   containerMovements.innerHTML = '';
-  movements.forEach(function(mov, i){
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function(mov, i){
     const movType = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -212,6 +215,13 @@ btnClose.addEventListener('click', function(e) {
   inputCloseUsername.value = inputClosePin.value = '';
 });
 
+let sorted = false;
+btnSort.addEventListener('click', function(e) {
+  e.preventDefault();
+  sorted = !sorted;
+  displayMovements(currentAccount.movements, sorted);
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -227,8 +237,199 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /////////////////////////////////////////////////
 
 // /// // /// // /// // /// // /// // /// // ///
+// /// Coding Challenge 4
+// /// // /// // /// // /// // /// // /// // ///
+
+// const dogs = [
+//   { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+//   { weight: 8, curFood: 200, owners: ['Matilda'] },
+//   { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+//   { weight: 32, curFood: 340, owners: ['Michael'] },
+// ];
+
+// // 1
+// dogs.forEach(dog => {
+//   dog.recommendedFood = dog.weight ** 0.75 * 28;
+// });
+// console.log(dogs);
+
+// // 2
+// const sarah = dogs.find(dog => dog.owners.includes('Sarah'));
+
+// console.log(`Sarah's dog is eating ${sarah.curFood > sarah.recommendedFood ? 'too much' : 'too little'}`);
+
+// // 3
+// const tooMuch = dogs.filter(dog => dog.curFood > dog.recommendedFood).flatMap(dog => dog.owners);
+// const tooLittle = dogs.filter(dog => dog.curFood < dog.recommendedFood).flatMap(dog => dog.owners);
+
+// console.log(tooMuch);
+// console.log(tooLittle);
+
+// // 4
+// console.log(`${tooMuch.join(' and ')}'s dogs eat too much!`);
+// console.log(`${tooLittle.join(' and ')}'s dogs eat too little!`);
+
+// // 5
+// console.log(dogs.some(dog => dog.recommendedFood == dog.curFood)? 'Eating the exact amount' : 'not eating the exact amount');
+
+// // 6
+// console.log(dogs.some(dog => Math.abs(dog.recommendedFood - dog.curFood) <= dog.recommendedFood * 0.1) ? 'Eating an Okay amount!' : 'Not the okay amount');
+
+// // 7 
+// const okay = dogs.filter(dog => Math.abs(dog.recommendedFood - dog.curFood) <= dog.recommendedFood * 0.1);
+// console.log(okay);
+
+// // 8 
+// // movements.sort((a, b) => b - a);
+// const dogsCopy = dogs.slice().sort((a, b) => a.recommendedFood - b.recommendedFood);
+// console.log(dogsCopy);
+
+// /// // /// // /// // /// // /// // /// // ///
+// /// Array methods practice
+// /// // /// // /// // /// // /// // /// // ///
+
+// // 1. how much money has been dopsited across all the banks movements
+
+// const bankDepositSum = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 0)
+//   .reduce((acc, mov) => acc + mov, 0);
+
+// console.log(bankDepositSum);
+
+// // 2. count how many deposits there have been in the bank with at least 1000 dollars
+
+// const numDeposits1000 = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov >= 1000).length;
+
+// console.log(numDeposits1000);
+
+// // can also be done with reduce
+// // can also be used to count something in an array, in this case using the ternary operator
+
+// // ++count increments count, but will still returns the old value, using ++ before the variable returns the new value
+// const numDeposits10002 = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((count, curr) => curr >= 1000 ? ++count : count, 0);
+
+// console.log(numDeposits10002);
+
+// // 3. calc both these sums at tha same time using the reduce method
+// const {deposits, withdrawals} = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((sums, cur) => {
+//       // cur > 0 ? sums.deposits += cur : sums.withdrawals += cur;
+//       sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+//     return sums;
+//   }, {deposits: 0, withdrawals: 0});
+
+// console.log(deposits, withdrawals);
+
+// // 4.
+// // this is a nice title -> This Is a Nice Title
+
+// const convertToTitleCase = function(title) {
+//   const capitalise = str => str[0].toUpperCase() + str.slice(1);
+
+//   const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+//   const titleCase = title
+//     .toLowerCase()
+//     .split(' ')
+//     .map(word => exceptions.includes(word) ? word : capitalise(word))
+//     .join(' ');
+
+//   return capitalise(titleCase);
+// };
+
+// console.log(convertToTitleCase('this is a nice title'));
+// console.log(convertToTitleCase('this is a LONG title'));
+// console.log(convertToTitleCase('and here is another title with an EXAMPLE'));
+
+
+// /// // /// // /// // /// // /// // /// // ///
+// /// More creating and filling arrays
+// /// // /// // /// // /// // /// // /// // ///
+
+// const arr = [1, 2, 3, 4, 5, 6, 7];
+// console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// // empty arrays + fill method
+
+// // creates an array of size 7
+// const x = new Array(7);
+// console.log(x);
+// // will not work
+// // console.log(x.map(() => 5));
+
+// // fill method, mutates underlying array
+// // second arg specifies where to begin
+// // third is where it ends
+// x.fill(1, 3, 5);
+// console.log(x);
+
+// // can be used to write over not empty array
+// arr.fill(23, 2, 6);
+// console.log(arr);
+
+// // Array.from
+// const y = Array.from({length: 7}, () => 1)
+// console.log(y);
+
+// // have to define somehting as the first param, to denot we are not using it we write an underscore, would normally denote the current iteration
+// const z = Array.from({length: 7}, (_, i) => i + 1);
+// console.log(z);
+
+// // string, maps etc are all iterables. iterables can be converted to arrays using from. we can create arrays FROM other things
+
+// // querySelectorAll returns a node list, it's not a real array so does not have the methods. We should therefore convert to an array
+
+// labelBalance.addEventListener('click', function() {
+
+//   // first arg is the original array, second is the callback function
+//   const movementsUI = Array.from(
+//     document.querySelectorAll('.movements__value'),
+//     el => Number(el.textContent.replace('€', ''))
+//   );
+  
+//   console.log(movementsUI);
+//   // console.log(movementsUI.map(el => Number(el.textContent.replace('€', ''))));
+
+//   const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+//   console.log(movementsUI2);
+// });
+
+// /// // /// // /// // /// // /// // /// // ///
 // /// Sorting Arrays
 // /// // /// // /// // /// // /// // /// // ///
+
+// // Strings
+// const owners = ['jonas', 'zach', 'adam', 'martha'];
+// console.log(owners.sort());
+// // This mutates the original array
+// console.log(owners);
+
+// // Numbers
+// console.log(movements);
+// // converts them to strings then does the sorting, not really useful
+// // console.log(movements.sort());
+
+// // return < 0, A before B (keep order)
+// // return > 0, B before A (switch order)
+// // a and b are any 2 elements being compared, in order
+// // movements.sort((a, b) => {
+// //   if (a > b) return 1;
+// //   if (b > a) return -1;
+// // });
+
+// // if a > b, a - b will be a positive number
+// movements.sort((a, b) => a - b);
+// console.log(movements);
+
+// Descending
+// movements.sort((a, b) => b - a);
+// console.log(movements);
 
 // /// // /// // /// // /// // /// // /// // ///
 // /// flat and flatMap
@@ -286,7 +487,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // /// // /// // /// // /// // /// // /// // ///
 
 // retrieve 1 element of an array based on a condition
-// loops over the array, will return the first element for qhich its condition is true
+// loops over the array, will return the first element for which its condition is true
 // const firstWithdrawal = movements.find(mov => mov < 0);
 // console.log(movements);
 // console.log(firstWithdrawal);
