@@ -90,6 +90,12 @@ a:visited {
   grid-column: 1 / -1;
 }
 
+.workout__button {
+  font-size: 1.5rem;
+  background-color: red;
+  border-radius: 10px;
+}
+
 .workout__details {
   display: flex;
   align-items: baseline;
